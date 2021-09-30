@@ -1,4 +1,6 @@
 
+STOP = False
+
 class Cell:
     
     def __init__(self, pos, size_, is_alive, generation, alive_neighbs=0):
@@ -80,27 +82,36 @@ def setup():
 
 def draw():
     
-    global CELL_LIST, NEW_CELL_LIST
+    global CELL_LIST, NEW_CELL_LIST, STOP
     
     background(255)
     
     frameRate(10)
     
-    for lst in CELL_LIST:
-        tmp_lst = []
-        for cell in lst:
-            new_cell = Cell(cell.pos, cell.size_, cell.is_alive, cell.generation, 0)
-            new_cell.count_neighbors(CELL_LIST)
-            new_cell.update()
-            tmp_lst.append(new_cell)
+    if not STOP:
+    
+        for lst in CELL_LIST:
+            tmp_lst = []
+            for cell in lst:
+                new_cell = Cell(cell.pos, cell.size_, cell.is_alive, cell.generation, 0)
+                new_cell.count_neighbors(CELL_LIST)
+                new_cell.update()
+                tmp_lst.append(new_cell)
+                
+            NEW_CELL_LIST.append(tmp_lst)
             
-        NEW_CELL_LIST.append(tmp_lst)
-        
-    CELL_LIST, NEW_CELL_LIST = NEW_CELL_LIST, []
+        CELL_LIST, NEW_CELL_LIST = NEW_CELL_LIST, []
     
     for lst in CELL_LIST:
         for cell in lst:
             cell.show()
+            
+
+def keyReleased(BACKSPACE):
+
+    global STOP
+    
+    STOP = True if not STOP else False
     
                   
     
