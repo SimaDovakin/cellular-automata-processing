@@ -113,11 +113,12 @@ def draw():
             cell.show()
             
 
-def keyReleased(BACKSPACE):
+def keyReleased():
 
     global STOP
     
-    STOP = True if not STOP else False
+    if keyCode == 32: # space
+            STOP = True if not STOP else False
     
 def mousePressed():
     global CELL_LIST, CELL_SIZE
