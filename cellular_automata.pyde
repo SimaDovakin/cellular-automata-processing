@@ -40,6 +40,7 @@ class Cell:
                 self.generation = 1
             
     def show(self):
+        
         if self.is_alive:
             if self.generation <= 100:
                 fill(100 - self.generation)
@@ -48,17 +49,22 @@ class Cell:
         else:
             fill(255)
             
-        rect(self.pos[0] * self.size_, self.pos[1] * self.size_, self.size_, self.size_)
+        if int(mouseX / CELL_SIZE) == self.pos[0] and int(mouseY / CELL_SIZE) == self.pos[1]:
+            stroke(0, 0, 255)
+                       
+        rect(self.pos[0] * self.size_, self.pos[1] * self.size_, self.size_, self.size_)    
+        noStroke()
+        
         
 
 def setup():
     
-    global CELL_LIST, NEW_CELL_LIST
+    global CELL_LIST, NEW_CELL_LIST, CELL_SIZE
     
     CELL_LIST = []
     NEW_CELL_LIST = []
     
-    CELL_SIZE = 5
+    CELL_SIZE = 10
     
     size(600, 600)
     noStroke()
@@ -66,7 +72,7 @@ def setup():
     for i in range(height/CELL_SIZE):
         tmp_list = []
         for j in range(width/CELL_SIZE):
-            is_alive=True if random(0, 1) > 0.5 else False
+            is_alive=True if random(0, 1) > 1 else False
             generation = 1 if is_alive else 0
             cell = Cell((i, j), CELL_SIZE, is_alive, generation, alive_neighbs=0)
             tmp_list.append(cell)
@@ -113,5 +119,14 @@ def keyReleased(BACKSPACE):
     
     STOP = True if not STOP else False
     
-                  
+def mousePressed():
+    global CELL_LIST, CELL_SIZE
+    
+    if mouseButton == LEFT:
+        
+        j = int(mouseY / CELL_SIZE)
+        i = int(mouseX / CELL_SIZE)
+        
+        CELL_LIST[i][j].is_alive = True if not CELL_LIST[i][j].is_alive else False
+                                            
     
