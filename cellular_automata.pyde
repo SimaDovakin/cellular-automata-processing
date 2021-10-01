@@ -115,10 +115,15 @@ def draw():
 
 def keyReleased():
 
-    global STOP
+    global STOP, CELL_LIST
     
     if keyCode == 32: # space
-            STOP = True if not STOP else False
+        STOP = True if not STOP else False
+    elif keyCode == 8: # backspace
+        # kill all cells
+        for row in CELL_LIST:
+            for cell in row:
+                cell.is_alive = False
     
 def mousePressed():
     global CELL_LIST, CELL_SIZE
