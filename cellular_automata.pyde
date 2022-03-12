@@ -50,7 +50,7 @@ class Cell:
             fill(255)
             
         if int(mouseX / CELL_SIZE) == self.pos[0] and int(mouseY / CELL_SIZE) == self.pos[1]:
-            stroke(0, 0, 255)
+            fill(220)
                        
         rect(self.pos[0] * self.size_, self.pos[1] * self.size_, self.size_, self.size_)    
         noStroke()
@@ -66,7 +66,7 @@ def setup():
     
     CELL_SIZE = 10
     
-    size(600, 600)
+    size(1000, 1000)
     noStroke()
     
     for i in range(height/CELL_SIZE):
