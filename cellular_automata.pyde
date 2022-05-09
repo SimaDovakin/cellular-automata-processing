@@ -1,6 +1,11 @@
 
 STOP = False
 
+DEAD_CELL_COLOR = (243, 243, 197)
+ALIVE_CELL_COLOR = (79, 189, 112)
+DEAD_CELL_HOVER_COLOR = (227, 227, 118)
+ALIVE_CELL_HOVER_COLOR = (0, 144, 46)
+
 class Cell:
     
     def __init__(self, pos, size_, is_alive, generation, alive_neighbs=0):
@@ -42,15 +47,15 @@ class Cell:
     def show(self):
         
         if self.is_alive:
-            if self.generation <= 100:
-                fill(100 - self.generation)
-            else:
-                fill(50, 150, 50)
+            fill(*ALIVE_CELL_COLOR)
         else:
-            fill(255)
+            fill(*DEAD_CELL_COLOR)
             
         if int(mouseX / CELL_SIZE) == self.pos[0] and int(mouseY / CELL_SIZE) == self.pos[1]:
-            fill(220)
+            if self.is_alive:
+                fill(*ALIVE_CELL_HOVER_COLOR)
+            else:
+                fill(*DEAD_CELL_HOVER_COLOR)
                        
         rect(self.pos[0] * self.size_, self.pos[1] * self.size_, self.size_, self.size_)    
         noStroke()
@@ -72,14 +77,14 @@ def setup():
     for i in range(height/CELL_SIZE):
         tmp_list = []
         for j in range(width/CELL_SIZE):
-            is_alive=True if random(0, 1) > 1 else False
+            is_alive=True if random(0, 1) > 0.9 else False
             generation = 1 if is_alive else 0
             cell = Cell((i, j), CELL_SIZE, is_alive, generation, alive_neighbs=0)
             tmp_list.append(cell)
             
         CELL_LIST.append(tmp_list)
         
-    background(255)
+    background(*DEAD_CELL_COLOR)
     
     for i in CELL_LIST:
         for cell in i:
@@ -90,7 +95,7 @@ def draw():
     
     global CELL_LIST, NEW_CELL_LIST, STOP
     
-    background(255)
+    background(*DEAD_CELL_COLOR)
     
     frameRate(10)
     
