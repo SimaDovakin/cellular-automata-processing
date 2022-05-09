@@ -135,8 +135,8 @@ def mousePressed():
     
     if mouseButton == LEFT:
         
-        j = int(mouseY / CELL_SIZE)
-        i = int(mouseX / CELL_SIZE)
+        j = mouseY // CELL_SIZE
+        i = mouseX // CELL_SIZE
         
         CELL_LIST[i][j].is_alive = True if not CELL_LIST[i][j].is_alive else False
                                             
